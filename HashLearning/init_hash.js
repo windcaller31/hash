@@ -7,6 +7,36 @@ var HashTable = function (){
   this.put = put;
   this.get = get;
   this.buildChains = buildChains;
+  this.values = [];
+
+  // key -> table  data -> values
+  function xianxing_put(key,data){
+    var pos = this.simpleHash(key);
+    if(!this.table[pos]){
+      this.table[pos] = key;
+      this.values[pos] = data;
+    }else{
+      while(this.table[pos]){
+        pos++;
+      }
+      this.table[pos] = key;
+      this.values[pos] = data;
+    }
+  }
+
+  function xianxing_get(key){
+    var hash = -1;
+    hash = this.simpleHash(key);
+    if(hash!= -1){
+      for(var i=hash;this.table[i];i++){
+        if(this.table[i]==key){
+          return this.values[i];
+        }
+      }
+    }
+    return undefined;
+  }
+
 
   function simpleHash(d){
     var total = 0;
